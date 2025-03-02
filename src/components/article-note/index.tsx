@@ -6,7 +6,7 @@ interface ArticleNoteProps {
 }
 
 export default function ArticleNote({ children, type }: ArticleNoteProps) {
-  const styles = "px-8 border-2 border-dashed text-white";
+  const styles = "px-6 border-2 border-dashed text-white";
 
   switch (type) {
     case "info":

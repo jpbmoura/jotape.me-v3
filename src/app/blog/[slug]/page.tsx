@@ -1,6 +1,7 @@
 import ArticleContainer from "@/components/acticle-container";
 import MDXLayout from "@/components/mdx-layout";
 import PostHero from "@/components/post-hero";
+import { loadBlogPost } from "@/utils/functions/posts-helpers";
 import { Undo2 } from "lucide-react";
 import Link from "next/link";
 
@@ -11,8 +12,11 @@ export default async function PostPage({
 }) {
   const slug = (await params).slug;
   const { default: Post } = await import(`../../../../posts/${slug}.mdx`);
+  const postInfo = (await loadBlogPost(slug)).frontmatter;
 
-  console.log("teste", Post);
+  function capitalizeWords(str: string): string {
+    return str.replace(/\b\w/g, (char) => char.toUpperCase());
+  }
 
   return (
     <ArticleContainer>
@@ -22,8 +26,8 @@ export default async function PostPage({
         </Link>
       </div>
       <PostHero
-        title="Um Humilde Guia Sobre Paleta de Cores"
-        publishedOn={new Date().toISOString()}
+        title={capitalizeWords(postInfo.title)}
+        publishedOn={new Date(postInfo.publishedOn).toISOString()}
       />
       <MDXLayout>
         <Post />

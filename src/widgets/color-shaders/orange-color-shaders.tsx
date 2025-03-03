@@ -1,6 +1,6 @@
 export default function OrangeColorShaders({ stage }: { stage: number }) {
   const squareStyle =
-    "h-full w-[11.1%] rounded items-center justify-center flex font-semibold ";
+    "h-full w-[11.1%] rounded items-center justify-center flex font-semibold";
 
   if (stage === 1) {
     return (

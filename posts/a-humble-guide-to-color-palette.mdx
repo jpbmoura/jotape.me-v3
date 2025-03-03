@@ -19,8 +19,10 @@ O vermelho, por exemplo, associado à paixão e à energia, tem a particularidad
 <ArticleNote type="info">
   Frequentemente na cultura pop a Psicologia das Cores é utilizada para
   "manipular" o que sentimos. Talvez uma das obras mais famosas que se utiliza
-  disso é a incrível série Breaking Bad. Tem um artigo muito massa que explica
-  melhor o uso na série.
+  disso é a incrível série [Breaking
+  Bad](https://www.imdb.com/title/tt0903747/). Tem um [artigo muito
+  massa](https://geekpopnews.com.br/breaking-bad-e-a-quimica-das-cores/) que
+  explica melhor o uso na série.
 </ArticleNote>
 
 Assim, as cores podem ser usadas estrategicamente para criar diferentes atmosferas e comunicar mensagens específicas nas nossas aplicações.
@@ -29,7 +31,7 @@ Assim, as cores podem ser usadas estrategicamente para criar diferentes atmosfer
 
 Uma ferramenta fundamental para qualquer ser que lida com cores, seja com pintura, decoração, moda ou, no meu caso, web design, é o Círculo Cromático. Ele é uma simples representação gráfica das cores, organizada de forma a mostrar as relações entre elas.
 
-<ChromaticCircle />
+<ChromaticCircle type="selector" />
 
 Ele é composto por 12 cores principais:
 
@@ -37,28 +39,109 @@ Ele é composto por 12 cores principais:
 - Três cores secundárias: Verde, Laranja e Roxo
 - Seis cores terciárias: Amarelo-alaranjado, Vermelho-alaranjado, Vermelho-púrpura, Azul-púrpura, Azul-esverdeado e Amarelo-esverdeado
 
+<ArticleNote type="info">
+  Não vou falar tuudo sobre o motivo de serem primárias, secundárias e
+  terciárias. Mas, se tu curte uma parada mais aprofundada, pode lê
+  [aqui](https://www.vivadecora.com.br/pro/cores-primarias/).
+</ArticleNote>
+
 Então chega aquela pergunta: **_"Como que eu, um simples mortal, vou usar esse carinha?"_**. Bom, vamos lá:
 
 #### Identificando Cores Complementares
 
 As cores que estão opostas no Circulo Cromático são as que chamamos de Complementares. Quando colocadas lado a lado, elas criam um forte contraste, o que pode ser usado para destacar elementos importantes da nossa aplicação.
 
+<ChromaticCircle type="two" />
+
 #### Cores Complementares Decompostas
 
 Uma variação das Cores Complementares é a Tríade, formalmente chamada de Cores Complementares Decompostas. Em vez de usar duas cores que estão diretamente em lados opostos do círculo cromático, as cores complementares decompostas usam três cores que estão igualmente espaçadas no círculo cromático.
+
+<ChromaticCircle type="three" />
 
 #### Cores Análogas
 
 Cores análogas são cores que estão lado a lado no círculo cromático. Elas são cores que se harmonizam naturalmente, criando um visual suave e elegante.
 
+<ChromaticCircle type="analogue" />
+
 ## Propriedades das Cores
 
 Nós, humildes humanos, percebemos as cores como um conjunto de aspectos: **Matiz**, **Brilho** e **Saturação**.
 
+<ColorProperties />
+
 **Matiz** (HUE) é a característica principal da cor, o que a identifica como vermelho, verde, azul, etc.
+
+<ArticleNote type="info">
+  A Matiz é determinada pelo comprimento de onda da luz que incide sobre a
+  retina. Me desculpe pelo momento nerd. 🤓
+</ArticleNote>
 
 **Brilho** é a intensidade da luz refletida por uma superfície. Uma cor com alto brilho é percebida como clara, enquanto uma cor com baixo brilho é percebida como escura. Simples e direto.
 
 **Saturação** é a pureza da cor, ou seja, o quanto ela se aproxima da cor pura do espectro visível. Uma cor com alta saturação é percebida como viva e intensa, enquanto uma cor com baixa saturação é percebida como pálida, sem vida, coxa e capenga.
 
 A combinação dessas três propriedades define a aparência de qualquer cor.
+
+## LaLhama Colchões
+
+Vamos lá! Com esses conceitos em mente, vamos montar uma paleta de
+cores para uma marca fictícia de colchões chamada "LaLhama”.
+
+Costumo começar escolhendo uma única cor para representar a marca e as
+sensações que quero passar com ela. No caso da LaLhama vou utilizar um <span className="text-sky-500 font-bold">azul mais clarinho</span>, meigo e
+amigável. De acordo com a psicologia das cores, ele trás uma sensação de
+proteção, tranquilidade e limpeza. Perfeito!
+
+Com a Cor da Marca definida, agora quero uma cor que dê contraste e
+possibilite a criação de pontos de foco na aplicação. Utilizando do
+Circulo Cromático, decidi escolher um <span className="text-orange-500 font-bold">laranja meio marrom meio esquisito</span>, que é uma cor que se encontra em uma posição oposta ao Azul.
+
+#### Gerando Nossos Tons
+
+Nas nossas aplicações, é comum termos alguns de tons das nossas cores
+para um punhado de cenários. Como, por exemplo, os blocos de texto
+informativos que utilizei algumas vezes aqui.
+
+Como que defino esses tons:
+
+1.  Crio nove quadrados, um ao lado do outro, numero eles de 100 à 900
+    e coloco nossa cor escolhida na posição central (500).
+
+    <ColorShaders color="sky" stage={1} />
+
+2.  Utilizando as propriedades das cores, vamos definir o tom mais
+    claro e o mais escuro. Para o mais claro, nós aumentamos levemente
+    o **Brilho** e diminuímos bastante a **Saturação**. Para o mais escuro, o inverso: diminuímos drasticamente o **Brilho** e ajustamos um pouco a **Saturação**. Lembre-se de não mudar a Matiz. Ela quem define a nossa cor.
+
+    <ColorShaders color="sky" stage={2} />
+
+3.  Agora que temos nossas extremidades, vamos encontrar o restante dos tons ajustando
+    a saturação e o brilho conforme a necessidade.
+
+    <ColorShaders color="sky" stage={3} />
+
+4.  Repetindo isso com nossa cor Secundária, temos todas as variações
+    que vamos utilizar.
+
+    <ColorShaders color="orange" stage={3} />
+
+<ArticleNote type="info">
+
+    A grande maiorias das aplicações vai precisar apresentar mensagens de erro
+    ou de sucesso, textos informativos(como esse aqui) e avisos. Para isso,
+    gosto de utilizar algumas Cores Suporte.
+
+    Normalmente utilzo o <span className="text-blue-500 font-bold">Azul</span> para mensagens informativas, <span className="text-green-500 font-bold">Verde</span> para mensagens de sucesso, <span className="text-red-500 font-bold">Vermelho</span> para mensagens de erro e <span className="text-yellow-500 font-bold">Amarelo</span> para avisos. Com essas cores, consigo passar a mensagem de forma clara e objetiva.
+
+    Também faço o processo de tonalidades para essas cores, mas com menos variações. Normalmente, utilizo 6 tons para cada uma delas.
+
+</ArticleNote>
+
+## That's All, Folks!
+
+E assim, conseguimos criar uma paleta de cores única e exclusiva. Com o Azul como cor principal e o Laranja como cor
+complementar, conseguimos criar uma paleta que transmite tranquilidade e segurança.
+
+Muito obrigado pela sua preciosa atenção. Até a próxima!

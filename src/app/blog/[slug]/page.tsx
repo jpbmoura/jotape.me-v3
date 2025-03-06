@@ -14,10 +14,6 @@ export default async function PostPage({
   const { default: Post } = await import(`../../../../posts/${slug}.mdx`);
   const postInfo = (await loadBlogPost(slug)).frontmatter;
 
-  function capitalizeWords(str: string): string {
-    return str.replace(/\b\w/g, (char) => char.toUpperCase());
-  }
-
   return (
     <ArticleContainer>
       <div>
@@ -26,7 +22,7 @@ export default async function PostPage({
         </Link>
       </div>
       <PostHero
-        title={capitalizeWords(postInfo.title)}
+        title={postInfo.title}
         publishedOn={new Date(postInfo.publishedOn).toISOString()}
       />
       <MDXLayout>

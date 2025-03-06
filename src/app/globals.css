@@ -8,6 +8,7 @@
 @theme {
   --color-background-dark: #050505;
   --color-text-dark: #b0b0b0;
+  --color-tomato: #e85757;
 }
 
 :root {

@@ -28,7 +28,7 @@ export async function getBlogPostList(): Promise<BlogPost[]> {
   return blogPosts.sort((p1, p2) => (p1.publishedOn < p2.publishedOn ? 1 : -1));
 }
 
-export async function loadBlogPost(slug: unknown) {
+export async function loadBlogPost(slug: string) {
   const rawContent = await readFile(`/posts/${slug}.mdx`);
 
   const { data: frontmatter, content } = matter(rawContent);

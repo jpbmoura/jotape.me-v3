@@ -25,20 +25,25 @@ export default function Home() {
       </p>
 
       <div>
-        <div className="flex gap-1">
-          Atualmente trabalhando na: <Tag label="Eduzz" icon={eduzzIcon} />
+        <div className="flex gap-1 flex-wrap">
+          Atualmente trabalhando na:{" "}
+          <Tag label="Eduzz" icon={eduzzIcon} href="https://www.eduzz.com/" />
         </div>
         <div className="flex gap-1">
-          Criador de: <Tag label="WhoWho" />
+          Criador de: <Tag label="WhoWho" href="https://www.whowho.app" />
         </div>
 
         <div className="flex gap-1">
           <p>Stack:</p>
-          <div className="flex gap-1 flex-row">
-            <Tag label="TypeScript" icon={tsIcon} />
-            <Tag label="React" icon={reactIcon} />
-            <Tag label="Next.JS" icon={nextIcon} />
-            <Tag label="NestJS" icon={nestIcon} />
+          <div className="flex gap-1 flex-row flex-wrap">
+            <Tag
+              label="TypeScript"
+              icon={tsIcon}
+              href="https://www.typescriptlang.org/"
+            />
+            <Tag label="React" icon={reactIcon} href="https://react.dev/" />
+            <Tag label="Next.JS" icon={nextIcon} href="https://nextjs.org/" />
+            <Tag label="NestJS" icon={nestIcon} href="https://nestjs.com/" />
           </div>
         </div>
       </div>

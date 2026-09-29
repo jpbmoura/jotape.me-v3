@@ -4,9 +4,11 @@ import CodeBlock from "@/components/code-block";
 import Highlight from "@/components/highlight";
 import TomatoMono from "@/components/tomato-mono";
 import WidgetContainer from "@/components/widget-container";
+import BrowserOnlyDemo from "@/widgets/browser-only-demo";
 import ChromaticCircle from "@/widgets/chromatic-circle";
 import ColorProperties from "@/widgets/color-properties";
 import ColorShaders from "@/widgets/color-shaders";
+import HydrationTimeline from "@/widgets/hydration-timeline";
 
 const components: MDXComponents = {
   pre: CodeBlock,
@@ -17,10 +19,12 @@ const components: MDXComponents = {
       <a href={href} {...props} />
     ),
   ArticleNote,
+  BrowserOnlyDemo,
   ChromaticCircle,
   ColorProperties,
   ColorShaders,
   Highlight,
+  HydrationTimeline,
   TomatoMono,
   WidgetContainer,
 };

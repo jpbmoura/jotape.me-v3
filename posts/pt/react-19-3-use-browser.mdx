@@ -1,0 +1,161 @@
+---
+title: "use(browser()): o React 19.3 aposentou o typeof window"
+abstract: "O React 19.3 saiu com uma API pequena que me chamou mais atenção do que o resto: use(browser()), um jeito oficial de dizer que um componente só existe no browser. Neste post, mostro o problema que ela resolve, os jeitos que a gente contornava isso até agora e por que ela não resolve tudo o que parece."
+publishedOn: "2026-09-28T12:00:00-0300"
+---
+
+O [React 19.3](https://react.dev/blog/2026/09/09/react-19-3) saiu no dia 9 de setembro e, lendo a release, a feature que mais me chamou atenção foi a menor delas: o <TomatoMono>use(browser())</TomatoMono>. É um jeito oficial de dizer ao React que um componente só existe no browser.
+
+Parece pouca coisa, mas é o fim de um hack que quase todo projeto com SSR tem escondido em algum lugar: o velho <TomatoMono>typeof window !== 'undefined'</TomatoMono>.
+
+Antes de chegar na API nova, vale entender o problema que ela tenta resolver.
+
+## O que é um hydration mismatch
+
+Com SSR, o servidor gera o HTML da página e manda para o browser. O browser mostra esse HTML na hora, monta a árvore de componentes de novo e compara com o que chegou. Esse processo é a **hidratação**.
+
+Se a primeira renderização no cliente sair diferente da do servidor, o React reclama. E tem componente que sai diferente por definição. O exemplo clássico é um toggle de tema que lê a preferência salva no <TomatoMono>localStorage</TomatoMono>: no servidor não existe <TomatoMono>localStorage</TomatoMono>, então ele não tem como saber que você prefere o tema escuro.
+
+```tsx title="theme-toggle.tsx"
+export function ThemeToggle() {
+  const theme =
+    typeof window !== "undefined"
+      ? localStorage.getItem("theme") ?? "light"
+      : "light";
+
+  return <button>{theme === "dark" ? "🌙 escuro" : "☀️ claro"}</button>;
+}
+```
+
+O <TomatoMono>typeof window</TomatoMono> faz exatamente o que o React não quer: dá <TomatoMono>false</TomatoMono> lá e <TomatoMono>true</TomatoMono> aqui. O servidor manda "claro", o browser renderiza "escuro" e pronto, mismatch.
+
+Dá play aí embaixo para ver isso acontecendo, e depois compara com as outras abordagens:
+
+<HydrationTimeline />
+
+## Os três jeitos de contornar (até agora)
+
+Até o 19.3, isso se resolvia de três jeitos, nenhum muito bonito.
+
+### O mounted no useEffect
+
+É o que eu mais vejo por aí. Um estado <TomatoMono>mounted</TomatoMono> que começa <TomatoMono>false</TomatoMono> e vira <TomatoMono>true</TomatoMono> num <TomatoMono>useEffect</TomatoMono>:
+
+```tsx title="theme-toggle.tsx"
+export function ThemeToggle() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  const theme = localStorage.getItem("theme") ?? "light";
+  return <button>{theme === "dark" ? "🌙 escuro" : "☀️ claro"}</button>;
+}
+```
+
+Funciona, mas repara: é um efeito sem efeito nenhum. Ele só existe para marcar que a hidratação passou. E como o componente não renderiza nada até lá, o que vem depois dele na página pula quando ele aparece.
+
+### dynamic com ssr: false
+
+No Next.js dá para resolver por fora do componente, pedindo para ele nem ser renderizado no servidor:
+
+```tsx title="header.tsx"
+import dynamic from "next/dynamic";
+
+const ThemeToggle = dynamic(() => import("./theme-toggle"), { ssr: false });
+```
+
+O componente fica limpo, mas a decisão de "isso só roda no browser" passa para quem importa o componente. E se você esquecer a opção <TomatoMono>loading</TomatoMono>, o espaço fica vazio no HTML do mesmo jeito.
+
+### useSyncExternalStore com getServerSnapshot
+
+Esse é considerado o jeito certo. O <TomatoMono>useSyncExternalStore</TomatoMono> aceita um terceiro argumento, o <TomatoMono>getServerSnapshot</TomatoMono>, que é usado no servidor e durante a hidratação:
+
+```tsx title="theme-toggle.tsx"
+const subscribe = () => () => {};
+
+export function ThemeToggle() {
+  const theme = useSyncExternalStore(
+    subscribe,
+    () => localStorage.getItem("theme") ?? "light", // browser
+    () => "light" // servidor e hidratação
+  );
+
+  return <button>{theme === "dark" ? "🌙 escuro" : "☀️ claro"}</button>;
+}
+```
+
+Isso acaba com o mismatch e com o efeito falso. Só que, logo depois da hidratação, o React lê o valor de verdade, percebe que mudou e força um update síncrono com re-render. Na prática, quem prefere o tema escuro vê o claro piscar antes. Muita cerimônia para comunicar uma coisa só. 😒
+
+## Chega o use(browser())
+
+A API nova é importada de <TomatoMono>react-dom</TomatoMono> e usada com o <TomatoMono>use</TomatoMono>:
+
+```tsx title="theme-toggle.tsx"
+import { use } from "react";
+import { browser } from "react-dom";
+
+export function ThemeToggle() {
+  use(browser());
+
+  const theme = localStorage.getItem("theme") ?? "light";
+  return <button>{theme === "dark" ? "🌙 escuro" : "☀️ claro"}</button>;
+}
+```
+
+```tsx title="header.tsx"
+<Suspense fallback={<ToggleSkeleton />}>
+  <ThemeToggle />
+</Suspense>
+```
+
+O funcionamento é este:
+
+- No servidor, o componente suspende e o <TomatoMono>Suspense</TomatoMono> mais próximo coloca o fallback no HTML.
+- No browser, a chamada retorna <TomatoMono>undefined</TomatoMono> e o render segue normal. Dá para usar <TomatoMono>localStorage</TomatoMono>, <TomatoMono>window</TomatoMono> e companhia sem medo.
+- Se não tiver um Suspense acima, o render no servidor falha inteiro, em vez de cair num fallback vazio sem você perceber.
+
+Esse último ponto eu acho ótimo. O React te obriga a decidir o que aparece enquanto o browser não assume.
+
+<ArticleNote type="info">
+
+O <TomatoMono>browser()</TomatoMono> aceita um argumento opcional, o <TomatoMono>reason</TomatoMono>. No servidor, ele vira a causa do erro recuperável que o React reporta quando joga aquele trecho para o browser. Colocar algo como <TomatoMono>browser("lê o tema do localStorage")</TomatoMono> deixa o log bem mais fácil de entender.
+
+</ArticleNote>
+
+Este blog já roda com o React 19.3, então dá para ver a API de verdade. O contador abaixo lê e grava no <TomatoMono>localStorage</TomatoMono> direto no render, sem <TomatoMono>useEffect</TomatoMono> e sem <TomatoMono>typeof window</TomatoMono>. Clica algumas vezes e recarrega a página:
+
+<BrowserOnlyDemo />
+
+Se você abrir o código-fonte da página, vai ver que no lugar do contador só tem o skeleton. Coisa linda! 🤩
+
+## Mas não resolve o que parece resolver
+
+O <TomatoMono>use(browser())</TomatoMono> não faz o componente existir no servidor. Ele continua tendo dois estados no tempo: o fallback e o conteúdo. E é o fallback que decide se a tela vai pular.
+
+Se você passar <TomatoMono>null</TomatoMono> ali, voltou pro problema do <TomatoMono>mounted</TomatoMono>, só que com uma API nova:
+
+<HydrationTimeline mode="fallback" />
+
+Com um skeleton do mesmo tamanho do componente, o espaço já vem reservado no HTML e nada se mexe quando o conteúdo chega. Com <TomatoMono>null</TomatoMono>, tudo que está abaixo desce.
+
+<ArticleNote type="warning">
+
+O <TomatoMono>use(browser())</TomatoMono> também não resolve o flash de tema da página inteira. Se o problema é a cor de fundo do site, o jeito continua sendo um script inline no <TomatoMono>&lt;head&gt;</TomatoMono> que aplica a classe antes do primeiro paint. A API nova é para componentes, não para o documento.
+
+</ArticleNote>
+
+## Por que ainda gosto dela
+
+Mesmo sem mágica, gostei da ideia. O que ela faz é te obrigar a escrever o fallback num lugar declarado, em vez de deixar a fronteira entre servidor e browser escondida num <TomatoMono>useEffect</TomatoMono>. Quem lê o componente vê o <TomatoMono>use(browser())</TomatoMono> na primeira linha e já sabe o que está acontecendo.
+
+Para biblioteca, isso importa ainda mais, porque vira uma linguagem comum. O [Wasp já abriu uma issue](https://github.com/wasp-lang/wasp/issues/4832) para trocar o truque com <TomatoMono>useSyncExternalStore</TomatoMono> deles por essa API, justamente por causa do update síncrono e do re-render extra.
+
+## Fechando
+
+Da próxima vez que você for escrever um <TomatoMono>typeof window</TomatoMono> ou um <TomatoMono>mounted</TomatoMono>, experimenta o <TomatoMono>use(browser())</TomatoMono>. Só não esquece de caprichar no fallback, porque é ele que o seu usuário vai ver primeiro.
+
+A [documentação da API](https://react.dev/reference/react-dom/browser) é curta e vale a leitura. Se você já trocou algum hack por ela, me conta como ficou.

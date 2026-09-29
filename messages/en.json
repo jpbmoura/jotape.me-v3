@@ -64,6 +64,75 @@
       "blue": "Blue",
       "violet": "Violet",
       "pink": "Pink"
+    },
+    "hydration": {
+      "approach": "Approach",
+      "stage": "Stage",
+      "play": "Play",
+      "pause": "Pause",
+      "theme": "Theme",
+      "light": "light",
+      "dark": "dark",
+      "jumped": "jumped!",
+      "flashed": "flashed!",
+      "caption": {
+        "approaches": "Theme saved in localStorage: dark. Pick an approach and hit play.",
+        "fallback": "The same use(browser()), with two different fallbacks."
+      },
+      "stages": {
+        "server": "Server HTML",
+        "hydrate": "Hydration",
+        "after": "After"
+      },
+      "where": {
+        "server": "view-source: the HTML that arrived",
+        "hydrate": "browser: hydrating…",
+        "after": "browser: done"
+      },
+      "notes": {
+        "typeofWindow": {
+          "server": "There's no window on the server, so the component falls back to the default: light theme.",
+          "hydrate": "In the browser the check is true, the component reads dark from localStorage, and React finds HTML that doesn't match what it expected. Hydration mismatch.",
+          "after": "React throws away that chunk of HTML and renders it again on the client. It works, but with an error in the console and twice the work."
+        },
+        "mounted": {
+          "server": "mounted starts as false, so the server renders nothing in that spot.",
+          "hydrate": "On the first browser render mounted is still false. It matches the server, no mismatch.",
+          "after": "The useEffect runs, mounted flips to true and the component shows up. Everything below it gets pushed down."
+        },
+        "ssrFalse": {
+          "server": "dynamic with ssr: false skips this component on the server. Without a loading option, the spot stays empty.",
+          "hydrate": "Hydration walks right past it, because there's nothing to compare.",
+          "after": "The component's chunk loads and it shows up. Again, the rest of the page moves down."
+        },
+        "syncExternalStore": {
+          "server": "getServerSnapshot returns the server value: light.",
+          "hydrate": "During hydration React uses the same getServerSnapshot, so it matches. Still light, for now.",
+          "after": "Right after, React reads the real snapshot, sees dark and re-renders on the spot. The wrong theme flashes."
+        },
+        "useBrowser": {
+          "server": "use(browser()) suspends on the server and the nearest Suspense writes its fallback into the HTML.",
+          "hydrate": "React sees that boundary came in as a fallback and doesn't try to hydrate its content.",
+          "after": "In the browser the component renders for real and swaps the skeleton for the saved theme. Same size, nothing moves."
+        },
+        "fallbackNull": {
+          "server": "Same API, but now with fallback={null}. The server HTML has nothing in that spot.",
+          "hydrate": "So far, no different from the mounted trick.",
+          "after": "The component shows up and pushes the page down. New API, old problem."
+        },
+        "fallbackSkeleton": {
+          "server": "With a skeleton of the same size, the HTML already reserves the component's space.",
+          "hydrate": "The skeleton stays there while the browser takes over.",
+          "after": "The content takes the skeleton's place. The page doesn't jump."
+        }
+      }
+    },
+    "browserDemo": {
+      "label": "Clicks saved in your browser",
+      "increment": "+1",
+      "reset": "reset",
+      "loading": "Loading",
+      "caption": "This page's HTML only has the skeleton. The counter only exists in your browser."
     }
   },
   "NotFound": {

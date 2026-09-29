@@ -64,6 +64,75 @@
       "blue": "Azul",
       "violet": "Violeta",
       "pink": "Rosa"
+    },
+    "hydration": {
+      "approach": "Abordagem",
+      "stage": "Etapa",
+      "play": "Reproduzir",
+      "pause": "Pausar",
+      "theme": "Tema",
+      "light": "claro",
+      "dark": "escuro",
+      "jumped": "pulou!",
+      "flashed": "piscou!",
+      "caption": {
+        "approaches": "Tema salvo no localStorage: escuro. Escolha uma abordagem e dê play.",
+        "fallback": "O mesmo use(browser()), com dois fallbacks diferentes."
+      },
+      "stages": {
+        "server": "HTML do servidor",
+        "hydrate": "Hidratação",
+        "after": "Depois"
+      },
+      "where": {
+        "server": "view-source: o HTML que chegou",
+        "hydrate": "browser: hidratando…",
+        "after": "browser: pronto"
+      },
+      "notes": {
+        "typeofWindow": {
+          "server": "No servidor não existe window, então o componente cai no padrão: tema claro.",
+          "hydrate": "No browser a checagem dá true, o componente lê escuro do localStorage e o React encontra um HTML diferente do que esperava. Hydration mismatch.",
+          "after": "O React joga fora o HTML daquele trecho e renderiza de novo no cliente. Funciona, mas com erro no console e trabalho dobrado."
+        },
+        "mounted": {
+          "server": "O mounted começa false, então o servidor não renderiza nada nesse espaço.",
+          "hydrate": "No primeiro render do browser o mounted ainda é false. Bate com o servidor, sem mismatch.",
+          "after": "O useEffect roda, o mounted vira true e o componente aparece. Tudo abaixo dele desce."
+        },
+        "ssrFalse": {
+          "server": "O dynamic com ssr: false pula esse componente no servidor. Sem loading, o espaço fica vazio.",
+          "hydrate": "A hidratação passa direto por ele, porque não tem nada para comparar.",
+          "after": "O chunk do componente carrega e ele aparece. De novo, o resto da página desce."
+        },
+        "syncExternalStore": {
+          "server": "O getServerSnapshot devolve o valor do servidor: claro.",
+          "hydrate": "Na hidratação o React usa o mesmo getServerSnapshot, então bate. Por enquanto, claro.",
+          "after": "Logo depois o React lê o valor de verdade, vê escuro e re-renderiza na hora. O tema errado pisca."
+        },
+        "useBrowser": {
+          "server": "O use(browser()) suspende no servidor e o Suspense mais próximo coloca o fallback no HTML.",
+          "hydrate": "O React vê que aquela boundary veio como fallback e não tenta hidratar o conteúdo dela.",
+          "after": "No browser o componente renderiza de verdade e troca o skeleton pelo tema salvo. Mesmo tamanho, nada se mexe."
+        },
+        "fallbackNull": {
+          "server": "Mesma API, mas agora com fallback={null}. O HTML do servidor não tem nada nesse espaço.",
+          "hydrate": "Até aqui, nada diferente do mounted.",
+          "after": "O componente aparece e empurra a página para baixo. API nova, problema velho."
+        },
+        "fallbackSkeleton": {
+          "server": "Com um skeleton do mesmo tamanho, o HTML já reserva o espaço do componente.",
+          "hydrate": "O skeleton continua lá enquanto o browser assume.",
+          "after": "O conteúdo entra no lugar do skeleton. A página não pula."
+        }
+      }
+    },
+    "browserDemo": {
+      "label": "Cliques salvos no seu navegador",
+      "increment": "+1",
+      "reset": "zerar",
+      "loading": "Carregando",
+      "caption": "O HTML desta página só tem o skeleton. O contador existe apenas no seu browser."
     }
   },
   "NotFound": {

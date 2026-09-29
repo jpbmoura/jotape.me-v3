@@ -1,0 +1,444 @@
+---
+title: "Criando um blog com MDX, Next.js e Tailwind: por que markdown nunca é demais"
+abstract: "Escrevendo um post cheio de componentes interativos, percebi que passava mais tempo mexendo no código do post do que no texto. Foi aí que resolvi reconstruir o blog com MDX. Neste post, mostro passo a passo como montar um blog com Next.js, MDX e Tailwind."
+publishedOn: "2025-03-04T12:00:00-0400"
+---
+
+Enquanto escrevia um post cheio de componentes interativos, percebi que estava gastando mais tempo no código dos componentes do que no texto em si. Foi aí que me bateu a dúvida: **_"será que não existe um jeito melhor de juntar código e conteúdo?"_**
+
+Depois de testar algumas opções, resolvi refazer o blog usando **MDX**. Encaixar isso na minha stack deu mais trabalho do que eu esperava. Quebrei a cabeça com algumas configurações, mas no fim cheguei na versão que você está lendo agora.
+
+Neste post, vou mostrar o processo todo, da configuração inicial aos ajustes finais, para você montar o seu próprio blog com **Next.js**, **MDX** e **Tailwind CSS** sem passar pelas mesmas dores de cabeça. Mas antes, por que MDX?
+
+## Por que MDX?
+
+Se você já escreveu em **Markdown**, sabe como ele facilita a vida. A sintaxe é simples e dá para formatar texto sem mexer com HTML ou com editores visuais cheios de firula. Agora imagina misturar Markdown com componentes React. É exatamente isso que o MDX faz.
+
+O **MDX (Markdown + JSX)** permite escrever os posts em Markdown e, no meio do texto, usar componentes React. Além de parágrafos, listas e imagens, você pode colocar botões, gráficos animados, alertas ou qualquer outro componente que quiser. Era essa flexibilidade que eu precisava para ilustrar melhor os conceitos e deixar os posts mais interessantes.
+
+## Configurando o projeto
+
+Vamos começar criando o projeto com Next.js. Para o suporte ao MDX, vamos usar o <TomatoMono>@next/mdx</TomatoMono>, a biblioteca oficial do Next.js para isso.
+
+### Criando o projeto
+
+No terminal, rode o comando abaixo:
+
+```bash
+npx create-next-app@latest
+```
+
+```shell
+What is your project named? mdx-blog
+Would you like to use TypeScript? Yes
+Would you like to use ESLint? Yes
+Would you like to use Tailwind CSS? Yes
+Would you like your code inside a `src/` directory? Yes
+Would you like to use App Router? (recommended) Yes
+Would you like to use Turbopack for `next dev`? No
+Would you like to customize the import alias (`@/*` by default)? No
+```
+
+Agora, algumas dependências para o MDX:
+
+```bash
+npm install @next/mdx @mdx-js/loader @mdx-js/react @types/mdx gray-matter remark-frontmatter remark-mdx-frontmatter
+```
+
+Por que tantas dependências? (maldito JavaScript 😒)
+
+- **@next/mdx, @mdx-js/loader, @mdx-js/react, @types/mdx**: fazem o Next.js entender arquivos MDX, que misturam Markdown com JSX.
+- **gray-matter**: extrai os metadados de arquivos Markdown/MDX a partir do frontmatter, um bloco de YAML (ou JSON/TOML) no topo do arquivo.
+- **remark-frontmatter, remark-mdx-frontmatter**: fazem o parser do MDX reconhecer o bloco de frontmatter e transformam esses dados em um objeto acessível dentro do MDX.
+
+<ArticleNote type="info">
+
+**O que é frontmatter e como o gray-matter funciona?**
+
+O frontmatter é um bloco de metadados no começo de arquivos Markdown ou MDX, delimitado por três traços (<TomatoMono>---</TomatoMono>). Ele guarda informações sobre o documento, como título, data, autor e tags.
+
+O gray-matter separa esses metadados do conteúdo e transforma tudo em um objeto JavaScript. Veja um exemplo de arquivo <TomatoMono>.mdx</TomatoMono>:
+
+```mdx title="posts/example.mdx"
+---
+title: "Meu primeiro post"
+abstract: "Resumo do conteúdo para mostrar na listagem de posts"
+publishedOn: "2024-04-01T12:00:00-0400"
+---
+
+Esse é o conteúdo do post em **Markdown**.
+```
+
+Passando esse arquivo pelo <TomatoMono>gray-matter</TomatoMono>, o resultado é:
+
+```json
+{
+  "frontmatter": {
+    "title": "Meu primeiro post",
+    "abstract": "Resumo do conteúdo para mostrar na listagem de posts",
+    "publishedOn": "2024-04-01T12:00:00-0400"
+  },
+  "content": "Esse é o conteúdo do post em **Markdown**."
+}
+```
+
+Coisa linda! 🤩
+
+</ArticleNote>
+
+### Integrando o MDX ao Next.js
+
+Com o projeto criado, vamos integrar o **MDX** ao **Next.js**:
+
+```ts title="next.config.ts"
+import createMDX from "@next/mdx";
+import remarkFrontmatter from "remark-frontmatter";
+import remarkMDXFrontmatter from "remark-mdx-frontmatter";
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+};
+
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [remarkFrontmatter, remarkMDXFrontmatter],
+  },
+});
+
+export default withMDX(nextConfig);
+```
+
+O que esse código faz:
+
+- Adiciona suporte a arquivos **MDX** no **Next.js** com o <TomatoMono>@next/mdx</TomatoMono>.
+- Habilita a leitura do **frontmatter** com os plugins <TomatoMono>remark-frontmatter</TomatoMono> e <TomatoMono>remark-mdx-frontmatter</TomatoMono>.
+- Define as extensões de página (<TomatoMono>.mdx</TomatoMono>, <TomatoMono>.md</TomatoMono>, <TomatoMono>.js</TomatoMono>, <TomatoMono>.jsx</TomatoMono>, <TomatoMono>.ts</TomatoMono>, <TomatoMono>.tsx</TomatoMono>), para que arquivos nesses formatos possam ser tratados como páginas pelo **Next.js**.
+
+## Páginas dinâmicas para os posts
+
+Com tudo configurado, podemos começar a estruturar o blog. Vamos usar esta organização de pastas:
+
+```text
+┣ 📂 public/
+┣ 📂 posts/ # posts e páginas escritos em MDX
+┃ ┣ example.mdx
+┣ 📂 src/
+┃ ┣ 📂 app/
+┃ ┃ ┣ 📂 blog/ # página principal do blog (lista de posts)
+┃ ┃ ┃ ┣ 📂 [slug]/ # rota dinâmica para exibir cada post
+┃ ┃ ┃ ┃ ┣ page.tsx
+┃ ┃ ┃ ┣ page.tsx
+┃ ┃ ┣ globals.css
+┃ ┃ ┣ layout.tsx
+┃ ┃ ┣ page.tsx
+┃ ┣ 📂 components/
+┃ ┣ 📂 widgets/ # componentes usados dentro do MDX
+┃ ┣ 📂 utils/ # funções auxiliares, como o processamento do frontmatter
+┃ ┣ 📂 lib/ # configurações do MDX, carregamento de arquivos etc.
+┃ ┣ mdx-components.tsx # falamos desse carinha mais adiante
+┣ .gitignore # arquivos e pastas ignorados pelo git
+┣ package.json # dependências e scripts do projeto
+┣ next.config.ts # configuração do Next.js, incluindo o suporte a MDX
+┣ README.md # documentação do projeto
+```
+
+### O que é o [slug]?
+
+No **Next.js**, <TomatoMono>[slug]</TomatoMono> é uma [rota dinâmica](https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes), que gera páginas automaticamente a partir de um identificador. No nosso caso, o identificador é o nome do arquivo **MDX**. Em vez de criar uma página na mão para cada post, o **Next.js** carrega e renderiza o conteúdo certo de acordo com a URL acessada.
+
+No arquivo <TomatoMono>page.tsx</TomatoMono> da rota <TomatoMono>[slug]</TomatoMono>, vamos criar um componente que pega o nome do post pela URL (por exemplo, <TomatoMono>/blog/post-exemplo</TomatoMono>), busca o arquivo correspondente (<TomatoMono>post-exemplo.mdx</TomatoMono>) e mostra o conteúdo na tela.
+
+O código fica mais ou menos assim:
+
+```tsx title="src/app/blog/[slug]/page.tsx"
+import { notFound } from "next/navigation";
+
+export default async function PostPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  try {
+    // Importa o post dinamicamente com base no slug da URL
+    const { default: Post } = await import(
+      `../../../../posts/${params.slug}.mdx`
+    );
+
+    return (
+      <article>
+        <div>
+          <span>{/* Title */}</span>
+          <span>{/* PublishedOn */}</span>
+        </div>
+
+        <Post />
+      </article>
+    );
+  } catch (error) {
+    // Se o arquivo não existir, mostra a página 404
+    notFound();
+  }
+}
+```
+
+Assim, todo post novo que você colocar em <TomatoMono>posts/</TomatoMono> vai estar disponível em <TomatoMono>/blog/nome-do-post</TomatoMono>, sem nenhuma configuração extra.
+
+Ainda falta uma coisa: **_como acessar os metadados dos posts?_** A página precisa mostrar pelo menos o título e a data de publicação, e essas informações estão no frontmatter.
+
+### Criando o posts-helpers.ts
+
+Para deixar o código organizado, vamos criar um arquivo <TomatoMono>posts-helpers.ts</TomatoMono> dentro da pasta <TomatoMono>utils/</TomatoMono>. Ele vai ter as funções auxiliares para lidar com os posts, como listar todos e carregar o conteúdo de um post específico.
+
+```ts title="src/utils/posts-helpers.ts"
+import fs from "fs/promises";
+import path from "path";
+import matter from "gray-matter";
+
+type BlogPost = {
+  slug: string;
+  title: string;
+  abstract: string;
+  publishedOn: string; // Pode ser `Date`, se preferir trabalhar com objetos de data
+};
+
+/**
+ * Retorna a lista de posts do blog ordenada pela data de publicação (mais recentes primeiro).
+ */
+export async function getBlogPostList(): Promise<BlogPost[]> {
+  const fileNames = await readDirectory("posts"); // Lista os arquivos da pasta `posts/`
+  const blogPosts: BlogPost[] = [];
+
+  for (const fileName of fileNames) {
+    const rawContent = await readFile(`posts/${fileName}`);
+    const { data: frontmatter } = matter(rawContent); // Extrai os metadados (frontmatter)
+
+    blogPosts.push({
+      ...(frontmatter as Omit<BlogPost, "slug">),
+      slug: fileName.replace(".mdx", ""), // O slug é o nome do arquivo sem a extensão
+    });
+  }
+
+  // Ordena os posts do mais recente para o mais antigo
+  return blogPosts.sort((a, b) => (a.publishedOn < b.publishedOn ? 1 : -1));
+}
+
+/**
+ * Carrega o conteúdo de um post específico a partir do `slug`.
+ */
+export async function loadBlogPost(slug: string) {
+  const rawContent = await readFile(`posts/${slug}.mdx`);
+  const { data: frontmatter, content } = matter(rawContent);
+
+  return { frontmatter, content };
+}
+
+/**
+ * Lê o conteúdo de um arquivo dentro do projeto.
+ */
+async function readFile(localPath: string) {
+  return fs.readFile(path.join(process.cwd(), localPath), "utf8");
+}
+
+/**
+ * Lê os nomes dos arquivos de um diretório.
+ */
+async function readDirectory(localPath: string) {
+  return fs.readdir(path.join(process.cwd(), localPath));
+}
+```
+
+**Maravilha!** Com as funções auxiliares prontas, podemos voltar para a página dinâmica <TomatoMono>[slug]</TomatoMono> e fazer ela carregar os metadados do post.
+
+```tsx title="src/app/blog/[slug]/page.tsx"
+import { notFound } from "next/navigation";
+import { loadBlogPost } from "@/utils/posts-helpers";
+
+export default async function PostPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  try {
+    const { default: Post } = await import(
+      `../../../../posts/${params.slug}.mdx`
+    );
+    const { frontmatter } = await loadBlogPost(params.slug);
+
+    return (
+      <article>
+        <div>
+          <span>{frontmatter.title}</span>
+          <span>{frontmatter.publishedOn}</span>
+        </div>
+
+        <Post />
+      </article>
+    );
+  } catch (error) {
+    notFound();
+  }
+}
+```
+
+Com a página do post funcionando, o próximo passo é listar os posts na página principal do blog.
+
+### Listando os posts em /blog
+
+Todo blog precisa de uma página que liste os posts, para o leitor ver o que tem por lá e escolher o que ler. Vamos montar essa listagem na rota <TomatoMono>/blog</TomatoMono>:
+
+```tsx title="src/app/blog/page.tsx"
+import Link from "next/link";
+import { getBlogPostList } from "@/utils/posts-helpers";
+
+export default async function BlogPage() {
+  const blogPosts = await getBlogPostList();
+
+  return (
+    <div>
+      <h1>Meu MDX-Blog</h1>
+
+      <div>
+        {blogPosts.map(({ slug, title, abstract, publishedOn }) => (
+          <Link key={slug} href={`/blog/${slug}`}>
+            <div>
+              <h2>{title}</h2>
+              <time dateTime={publishedOn}>
+                {new Date(publishedOn).toLocaleDateString()}
+              </time>
+            </div>
+
+            <p>{abstract}</p>
+            <span>Continue lendo →</span>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+## E o Tailwind?
+
+Para o **Tailwind** funcionar direitinho dentro dos arquivos **MDX**, precisamos de mais alguns ajustes.
+
+1. O **Tailwind** tem um plugin oficial chamado <TomatoMono>@tailwindcss/typography</TomatoMono>, que melhora a renderização de textos. Vamos instalar:
+
+```bash
+npm install @tailwindcss/typography
+```
+
+2. Agora, adicionamos o plugin no <TomatoMono>globals.css</TomatoMono>:
+
+```css title="src/app/globals.css"
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+```
+
+3. Para os posts ficarem bem estilizados, vamos criar um componente de layout chamado <TomatoMono>MDXLayout</TomatoMono> dentro da pasta **components**:
+
+```tsx title="src/components/mdx-layout.tsx"
+interface MDXLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function MDXLayout({ children }: MDXLayoutProps) {
+  return (
+    <section className="prose prose-a:text-white prose-headings:text-start prose-strong:text-white text-text-dark prose-headings:mt-8 prose-headings:font-semibold prose-headings:text-text-dark prose-h1:text-5xl prose-h2:text-4xl prose-h3:text-3xl prose-h4:text-2xl prose-h5:text-xl prose-h6:text-lg dark:prose-headings:text-white">
+      {children}
+    </section>
+  );
+}
+```
+
+<ArticleNote type="info">
+
+Essas são as classes que eu uso neste blog. Mude, teste outras combinações e deixe o seu blog com a sua cara.
+
+</ArticleNote>
+
+4. Por fim, envolvemos o post com o <TomatoMono>MDXLayout</TomatoMono> para o **Tailwind** estilizar o conteúdo:
+
+```tsx title="src/app/blog/[slug]/page.tsx"
+import { notFound } from "next/navigation";
+import MDXLayout from "@/components/mdx-layout";
+import { loadBlogPost } from "@/utils/posts-helpers";
+
+export default async function PostPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  try {
+    const { default: Post } = await import(
+      `../../../../posts/${params.slug}.mdx`
+    );
+    const { frontmatter } = await loadBlogPost(params.slug);
+
+    return (
+      <article>
+        <div>
+          <span>{frontmatter.title}</span>
+          <span>{frontmatter.publishedOn}</span>
+        </div>
+
+        <MDXLayout>
+          <Post />
+        </MDXLayout>
+      </article>
+    );
+  } catch (error) {
+    notFound();
+  }
+}
+```
+
+### Componentes React dentro do MDX
+
+A grande vantagem do **MDX** é poder usar componentes React dentro dos posts. Para isso funcionar no **Next.js**, precisamos de um arquivo especial chamado <TomatoMono>mdx-components.tsx</TomatoMono>, que define quais componentes ficam disponíveis nos arquivos **MDX**.
+
+```tsx title="src/mdx-components.tsx"
+import type { MDXComponents } from "mdx/types";
+
+import ChromaticCircle from "@/widgets/chromatic-circle";
+
+export function useMDXComponents(components: MDXComponents): MDXComponents {
+  return {
+    ...components,
+    ChromaticCircle, // Deixa o componente disponível nos arquivos MDX
+  };
+}
+```
+
+Com o componente registrado, já dá para usar ele em um post **MDX**:
+
+```mdx title="posts/example.mdx"
+## Círculo cromático
+
+Se você trabalha com cores ...
+
+<ChromaticCircle type="selector" />
+```
+
+Só um detalhe: o **Next.js** só encontra o <TomatoMono>mdx-components.tsx</TomatoMono> se ele estiver na raiz da pasta <TomatoMono>src/</TomatoMono>. A estrutura fica assim:
+
+```text
+📂 src/
+┣ 📂 components/
+┣ 📂 widgets/ <-- componentes para o MDX
+┃ ┗ 📜 chromatic-circle.tsx
+┗ 📜 mdx-components.tsx
+```
+
+<ArticleNote type="info">
+
+Eu gosto de deixar os componentes usados nos arquivos MDX na pasta <TomatoMono>widgets/</TomatoMono> em vez da <TomatoMono>components/</TomatoMono>, mas isso é gosto pessoal. Organize do jeito que fizer mais sentido para você.
+
+</ArticleNote>
+
+## Próximos passos
+
+A partir daqui, é só criar seus arquivos <TomatoMono>.mdx</TomatoMono> na pasta <TomatoMono>posts/</TomatoMono> e começar a escrever. O que montamos aqui é o esqueleto: página de listagem, página de post e suporte a componentes. Estilo, tags, feed RSS e o resto ficam por sua conta.
+
+Se você montar o seu, me manda o link. Quero ver o que você vai colocar no meio do texto.

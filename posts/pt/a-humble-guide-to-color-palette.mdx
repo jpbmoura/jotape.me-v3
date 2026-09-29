@@ -1,0 +1,129 @@
+---
+title: "Um humilde guia sobre paleta de cores"
+abstract: "Sempre que começo um projeto, passo um bom tempo escolhendo cores em sites como Coolors, Adobe Color ou Color Hunt. Só que, conforme o projeto ganha forma, a paleta pronta começa a parecer genérica. Neste post, mostro como eu monto uma paleta própria usando alguns conceitos básicos de teoria das cores."
+publishedOn: "2024-04-01T12:00:00-0400"
+---
+
+Sempre que começo um projeto, seja pessoal ou de trabalho, passo um bom tempo escolhendo cores.
+
+Normalmente fico pulando entre o [Coolors](https://coolors.co/), o [Adobe Color](https://color.adobe.com/pt/) e o [Color Hunt](https://colorhunt.co/) até achar algo que combine com a ideia. Funciona, mas conforme o projeto vai tomando forma, a paleta começa a parecer de outra pessoa. Quando isso acontece, eu paro e monto uma paleta do zero, usando alguns conceitos que fui aprendendo pelo caminho.
+
+Hoje vamos fazer isso juntos, criando a paleta de cores de uma landing page simples. Antes, vale pensar um pouco no que considerar na hora de escolher as cores.
+
+## Psicologia das cores
+
+Assim como as notas de uma escala musical, as cores conseguem passar emoções e influenciam bastante o que a gente pensa e sente.
+
+O vermelho, por exemplo, costuma ser associado à paixão e à energia, e também pode transmitir perigo ou desejo. Já o azul é ligado à calma e passa uma sensação de paz e tranquilidade.
+
+<ArticleNote type="info">
+
+A cultura pop usa muito a psicologia das cores para mexer com o que a gente sente. Um dos exemplos mais famosos é a série [Breaking Bad](https://www.imdb.com/title/tt0903747/). Tem um [artigo muito bom](https://geekpopnews.com.br/breaking-bad-e-a-quimica-das-cores/) que explica como a série faz isso.
+
+</ArticleNote>
+
+Ou seja, dá para usar as cores de forma estratégica para criar um clima e comunicar mensagens específicas nas nossas aplicações.
+
+## Círculo cromático
+
+Se você trabalha com cores, seja em pintura, decoração, moda ou, no meu caso, web design, o círculo cromático é uma ferramenta básica. Ele é uma representação gráfica das cores, organizada de um jeito que deixa claro como elas se relacionam.
+
+<ChromaticCircle type="selector" />
+
+Ele tem 12 cores principais:
+
+- Três cores primárias: vermelho, azul e amarelo
+- Três cores secundárias: verde, laranja e roxo
+- Seis cores terciárias: amarelo-alaranjado, vermelho-alaranjado, vermelho-púrpura, azul-púrpura, azul-esverdeado e amarelo-esverdeado
+
+<ArticleNote type="info">
+
+Não vou entrar no porquê de cada cor ser primária, secundária ou terciária. Se você quiser se aprofundar, dá uma olhada [neste artigo](https://www.vivadecora.com.br/pro/cores-primarias/).
+
+</ArticleNote>
+
+Aí vem a pergunta: **_"tá, mas como eu uso isso na prática?"_**. Vamos ver algumas combinações.
+
+### Cores complementares
+
+As cores que ficam em lados opostos do círculo cromático são chamadas de **complementares**. Lado a lado, elas criam um contraste forte, o que ajuda a destacar os elementos mais importantes da aplicação.
+
+<ChromaticCircle type="two" />
+
+### Tríade
+
+Uma variação das complementares é a **tríade**, também chamada de **cores complementares decompostas**. Em vez de pegar duas cores em lados opostos, a tríade usa três cores igualmente espaçadas no círculo.
+
+<ChromaticCircle type="three" />
+
+### Cores análogas
+
+Cores análogas são as que ficam lado a lado no círculo cromático. Elas combinam naturalmente entre si e deixam o visual mais suave.
+
+<ChromaticCircle type="analogue" />
+
+## Propriedades das cores
+
+A gente percebe cada cor como uma combinação de três propriedades: **matiz**, **brilho** e **saturação**.
+
+<ColorProperties />
+
+**Matiz** (hue) é a característica principal da cor, o que faz a gente chamar uma cor de vermelho, verde, azul e assim por diante.
+
+<ArticleNote type="info">
+
+A matiz é determinada pelo comprimento de onda da luz que chega à retina. Desculpa pelo momento nerd. 🤓
+
+</ArticleNote>
+
+**Brilho** é a intensidade da luz refletida por uma superfície. Uma cor com muito brilho parece clara, e uma com pouco brilho parece escura.
+
+**Saturação** é a pureza da cor, ou seja, o quanto ela se aproxima da cor pura do espectro visível. Uma cor bem saturada parece viva e intensa, enquanto uma cor pouco saturada fica pálida e meio sem graça.
+
+Juntas, essas três propriedades definem a aparência de qualquer cor.
+
+## LaLhama Colchões
+
+Com esses conceitos em mente, vamos montar a paleta de uma marca fictícia de colchões chamada "LaLhama".
+
+Eu costumo começar escolhendo uma única cor para representar a marca e o que quero que as pessoas sintam. Para a LaLhama, escolhi um <Highlight color="sky">azul mais clarinho</Highlight>, delicado e amigável. Segundo a psicologia das cores, ele traz uma sensação de proteção, tranquilidade e limpeza, que é bem o que uma marca de colchões quer passar.
+
+Com a cor da marca definida, preciso de uma segunda cor que faça contraste e ajude a criar pontos de foco na página. Olhando o círculo cromático, fui para o lado oposto do azul e escolhi um <Highlight color="orange">laranja meio amarronzado, meio esquisito</Highlight>.
+
+### Gerando os tons
+
+Nas aplicações, é comum precisar de vários tons da mesma cor para situações diferentes, como as caixinhas de informação que apareceram algumas vezes neste post.
+
+Eu defino esses tons assim:
+
+1. Crio nove quadrados lado a lado, numerados de 100 a 900, e coloco a cor escolhida na posição central (500).
+
+<ColorShaders color="sky" stage={1} />
+
+2. Usando as propriedades das cores, defino o tom mais claro e o mais escuro. Para o mais claro, aumento um pouco o **brilho** e diminuo bastante a **saturação**. Para o mais escuro, faço o contrário: diminuo bastante o **brilho** e ajusto um pouco a **saturação**. A matiz fica igual, porque é ela que define a cor.
+
+<ColorShaders color="sky" stage={2} />
+
+3. Com as duas pontas definidas, preencho os tons do meio ajustando a saturação e o brilho aos poucos, até a transição ficar natural.
+
+<ColorShaders color="sky" stage={3} />
+
+4. Repito o processo com a cor secundária e pronto, temos todas as variações que vamos usar.
+
+<ColorShaders color="orange" stage={3} />
+
+<ArticleNote type="info">
+
+Quase toda aplicação precisa mostrar mensagens de erro ou de sucesso, textos informativos (como este aqui) e avisos. Para isso, gosto de ter algumas cores de suporte.
+
+Normalmente uso <Highlight color="blue">azul</Highlight> para mensagens informativas, <Highlight color="green">verde</Highlight> para sucesso, <Highlight color="red">vermelho</Highlight> para erros e <Highlight color="yellow">amarelo</Highlight> para avisos. Assim a mensagem fica clara logo de cara.
+
+Também gero tons para essas cores, só que com menos variações. Costumo usar seis tons para cada uma.
+
+</ArticleNote>
+
+## Fechando a paleta
+
+No fim, a LaLhama ficou com um azul claro como cor principal, um laranja como cor de destaque e um punhado de cores de suporte, cada uma com sua escala de tons. Nada disso saiu de um gerador de paletas, e cada escolha tem um motivo.
+
+Da próxima vez que uma paleta pronta parecer genérica demais, tenta partir de uma cor só e construir o resto com o círculo cromático. Dá mais trabalho, mas o resultado fica com a cara do projeto.

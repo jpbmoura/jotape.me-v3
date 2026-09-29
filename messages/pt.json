@@ -1,0 +1,74 @@
+{
+  "Metadata": {
+    "title": "João Pedro de Moura",
+    "description": "Engenheiro front-end brasileiro e co-founder da Lucida. Escrevo sobre interfaces, design e web.",
+    "blogTitle": "Blog",
+    "blogDescription": "Notas e posts interativos sobre front-end, design e desenvolvimento web."
+  },
+  "Nav": {
+    "home": "Início",
+    "blog": "Blog",
+    "github": "Perfil no GitHub",
+    "linkedin": "Perfil no LinkedIn",
+    "language": "Idioma"
+  },
+  "Home": {
+    "name": "João Pedro de Moura",
+    "role": "Engenheiro front-end",
+    "intro": "Construo interfaces para a web há mais de 5 anos. Me importo com os detalhes que fazem um software parecer rápido e óbvio: animação, tipografia, aquele estado vazio que ninguém desenhou.",
+    "work": "Front-end na <eduzz>Eduzz</eduzz>, onde ajudei a desenhar nossa arquitetura de micro-frontends e os padrões com que os times constroem. Co-founder da <lucida>Lucida</lucida>, que ajuda professores a transformar o próprio material em provas.",
+    "hobby": "Longe da tela, faço música e escrevo, quase sempre para uma plateia de uma pessoa só.",
+    "writing": "De vez em quando escrevo umas coisas no <blog>blog</blog>.",
+    "contactTitle": "Contato",
+    "contact": "Me encontra no <linkedin>LinkedIn</linkedin> ou no <github>GitHub</github>."
+  },
+  "Blog": {
+    "title": "Blog",
+    "subtitle": "Notas sobre front-end, design e desenvolvimento web. Em alguns dá até pra brincar.",
+    "readMore": "Ler post",
+    "readingTime": "{minutes} min de leitura",
+    "back": "Todos os posts",
+    "toc": "Nesta página",
+    "empty": "Nada por aqui ainda.",
+    "loading": "Carregando…",
+    "home": "João Pedro de Moura"
+  },
+  "Code": {
+    "copy": "Copiar código",
+    "copied": "Copiado!"
+  },
+  "Widgets": {
+    "pickColor": "Escolha uma cor para começar",
+    "pickColorHint": "Clique ou use as setas do teclado",
+    "copyHex": "Copiar {hex}",
+    "copied": "Copiado!",
+    "hue": "Matiz",
+    "brightness": "Brilho",
+    "saturation": "Saturação",
+    "pickHue": "Escolha uma matiz para ver como ela muda",
+    "colorTypes": {
+      "primary": "Primária",
+      "secondary": "Secundária",
+      "tertiary": "Terciária"
+    },
+    "modes": {
+      "selector": "Círculo cromático",
+      "two": "Complementares",
+      "three": "Tríade",
+      "analogue": "Análogas"
+    },
+    "colorNames": {
+      "red": "Vermelho",
+      "yellow": "Amarelo",
+      "green": "Verde",
+      "blue": "Azul",
+      "violet": "Violeta",
+      "pink": "Rosa"
+    }
+  },
+  "NotFound": {
+    "title": "Não tem nada aqui",
+    "description": "Essa página se perdeu, ou nunca existiu.",
+    "back": "Voltar para o início"
+  }
+}

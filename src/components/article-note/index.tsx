@@ -1,32 +1,31 @@
-"use client";
+import { CircleAlert, Info, TriangleAlert } from "lucide-react";
+import { cn } from "@/utils/functions/cn";
 
 interface ArticleNoteProps {
-  type: "info" | "warning" | "danger";
+  type?: "info" | "warning" | "danger";
   children: React.ReactNode;
 }
 
-export default function ArticleNote({ children, type }: ArticleNoteProps) {
-  const styles =
-    "px-6 border-l-6 text-white font-semibold items-center py-2 rounded-r-sm my-4";
+const variants = {
+  info: { icon: Info, className: "border-sky-500/60 bg-sky-500/[0.06]", iconClass: "text-sky-400" },
+  warning: { icon: TriangleAlert, className: "border-amber-500/60 bg-amber-500/[0.06]", iconClass: "text-amber-400" },
+  danger: { icon: CircleAlert, className: "border-red-500/60 bg-red-500/[0.06]", iconClass: "text-red-400" },
+};
 
-  switch (type) {
-    case "info":
-      return (
-        <div className={`${styles} bg-[#172436] border-sky-600`}>
-          {children}
-        </div>
-      );
-    case "warning":
-      return (
-        <div className={`${styles} bg-blue-950 border-blue-900`}>
-          {children}
-        </div>
-      );
-    case "danger":
-      return (
-        <div className={`${styles} bg-blue-950 border-blue-900`}>
-          {children}
-        </div>
-      );
-  }
+export default function ArticleNote({ type = "info", children }: ArticleNoteProps) {
+  const { icon: Icon, className, iconClass } = variants[type];
+
+  return (
+    <aside
+      role="note"
+      className={cn(
+        "not-prose my-8 flex gap-3 rounded-r-md border-l-2 px-4 py-3 text-[0.95rem] leading-relaxed text-muted",
+        "[&_a]:text-fg [&_a]:underline [&_a]:underline-offset-4 [&_p+p]:mt-3 [&_strong]:text-fg",
+        className
+      )}
+    >
+      <Icon aria-hidden="true" className={cn("mt-1 size-4 shrink-0", iconClass)} />
+      <div className="min-w-0">{children}</div>
+    </aside>
+  );
 }

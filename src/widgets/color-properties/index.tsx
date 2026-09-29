@@ -1,91 +1,113 @@
 "use client";
 
-import WidgetContainer from "@/components/widget-container";
+import { useState } from "react";
 import { motion } from "motion/react";
-import React from "react";
+import { useTranslations } from "next-intl";
+import WidgetContainer from "@/components/widget-container";
+import { cn } from "@/utils/functions/cn";
 
-type HueColor = {
-  name: string;
-  tailwind_class: string;
-};
+const hues = [
+  { name: "red", hex: "#ef4444" },
+  { name: "yellow", hex: "#eab308" },
+  { name: "green", hex: "#22c55e" },
+  { name: "blue", hex: "#3b82f6" },
+  { name: "violet", hex: "#8b5cf6" },
+  { name: "pink", hex: "#ec4899" },
+] as const;
 
-const hueColors = [
-  { name: "red", tailwind_class: "bg-red-500" },
-  { name: "yellow", tailwind_class: "bg-yellow-500" },
-  { name: "green", tailwind_class: "bg-green-500" },
-  { name: "blue", tailwind_class: "bg-blue-500" },
-  { name: "violet", tailwind_class: "bg-violet-500" },
-  { name: "pink", tailwind_class: "bg-pink-500" },
-];
+const steps = [1, 0.8, 0.6, 0.4, 0.2, 0];
 
-const saturation = [
-  { name: "100", tailwind_class: "saturate-[1]" },
-  { name: "80", tailwind_class: "saturate-[0.8]" },
-  { name: "60", tailwind_class: "saturate-[0.6]" },
-  { name: "40", tailwind_class: "saturate-[0.4]" },
-  { name: "20", tailwind_class: "saturate-[0.2]" },
-  { name: "0", tailwind_class: "saturate-[0]" },
-];
-
-const brightness = [
-  { name: "100", tailwind_class: "brightness-[1]" },
-  { name: "80", tailwind_class: "brightness-[0.8]" },
-  { name: "60", tailwind_class: "brightness-[0.6]" },
-  { name: "40", tailwind_class: "brightness-[0.4]" },
-  { name: "20", tailwind_class: "brightness-[0.2]" },
-  { name: "0", tailwind_class: "brightness-[0]" },
-];
+const cell = "h-10 w-full rounded-md md:h-8";
 
 export default function ColorProperties() {
-  const [selectedColor, setSelectedColor] = React.useState<HueColor | null>(
-    null
-  );
+  const t = useTranslations("Widgets");
+  const [selected, setSelected] = useState<(typeof hues)[number] | null>(null);
+
+  function onKeyDown(event: React.KeyboardEvent, index: number) {
+    const step = event.key === "ArrowDown" || event.key === "ArrowRight" ? 1 : event.key === "ArrowUp" || event.key === "ArrowLeft" ? -1 : 0;
+    if (!step) return;
+    event.preventDefault();
+    const next = (index + step + hues.length) % hues.length;
+    setSelected(hues[next]);
+    (event.currentTarget.parentElement?.children[next] as HTMLElement | undefined)?.focus();
+  }
+
+  const focusable = selected ? hues.indexOf(selected) : 0;
 
   return (
     <WidgetContainer>
-      <div className="flex flex-col gap-4 md:flex-row md:gap-8 justify-evenly">
-        <div className="flex flex-col gap-4 items-center">
-          <span className="font-bold">Matiz</span>
-          <div className="flex flex-row md:flex-col">
-            {hueColors.map((color) => (
-              <motion.div
-                key={color.name}
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.8 }}
-                transition={{ type: "spring", stiffness: 150 }}
-                className={`cursor-cell md:w-20 md:h-8 w-8 h-12 ${
-                  color.tailwind_class
-                } ${selectedColor === color && "border-2 border-white"}`}
-                onClick={() => setSelectedColor(color)}
-              ></motion.div>
+      <div className="grid grid-cols-3 gap-3 sm:gap-6">
+        <Column label={t("hue")}>
+          <div role="radiogroup" aria-label={t("hue")} className="flex flex-col gap-1.5">
+            {hues.map((hue, index) => (
+              <motion.button
+                key={hue.name}
+                type="button"
+                role="radio"
+                aria-checked={selected === hue}
+                aria-label={t(`colorNames.${hue.name}`)}
+                tabIndex={index === focusable ? 0 : -1}
+                onClick={() => setSelected(hue)}
+                onKeyDown={(event) => onKeyDown(event, index)}
+                whileTap={{ scale: 0.95 }}
+                className={cn(
+                  cell,
+                  "focus-ring relative cursor-pointer transition-opacity",
+                  selected && selected !== hue && "opacity-50 hover:opacity-80"
+                )}
+                style={{ backgroundColor: hue.hex }}
+              >
+                {selected === hue && (
+                  <motion.span
+                    layoutId="hue-ring"
+                    className="absolute -inset-1 rounded-lg border-2 border-fg"
+                    transition={{ type: "spring", stiffness: 300, damping: 28 }}
+                  />
+                )}
+              </motion.button>
             ))}
           </div>
-        </div>
+        </Column>
 
-        <div className="flex flex-col gap-4 items-center">
-          <span className="font-bold">Brilho</span>
-          <div className="flex flex-row md:flex-col">
-            {Array.from({ length: 6 }).map((_, index) => (
-              <motion.div
-                key={index}
-                className={`cursor-cell md:w-20 md:h-8 w-8 h-12 ${selectedColor?.tailwind_class} ${brightness[index].tailwind_class} ${selectedColor}`}
-              ></motion.div>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-4 items-center">
-          <span className="font-bold">Saturação</span>
-          <div className="flex flex-row md:flex-col">
-            {Array.from({ length: 6 }).map((_, index) => (
-              <motion.div
-                key={index}
-                className={`cursor-cell md:w-20 md:h-8 w-8 h-12 ${selectedColor?.tailwind_class} ${saturation[index].tailwind_class} ${selectedColor}`}
-              ></motion.div>
-            ))}
-          </div>
-        </div>
+        <Ramp label={t("brightness")} hex={selected?.hex} filter={(v) => `brightness(${v})`} />
+        <Ramp label={t("saturation")} hex={selected?.hex} filter={(v) => `saturate(${v})`} />
       </div>
+
+      {!selected && (
+        <p className="mt-4 text-center text-xs text-subtle">{t("pickHue")}</p>
+      )}
     </WidgetContainer>
+  );
+}
+
+function Column({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="flex flex-col gap-3">
+      <span className="text-center font-mono text-xs tracking-wide text-subtle uppercase">
+        {label}
+      </span>
+      {children}
+    </div>
+  );
+}
+
+function Ramp({ label, hex, filter }: { label: string; hex?: string; filter: (v: number) => string }) {
+  return (
+    <Column label={label}>
+      <ol className="flex flex-col gap-1.5" aria-label={label}>
+        {steps.map((value, index) => (
+          <motion.li
+            key={value}
+            className={cell}
+            aria-label={`${Math.round(value * 100)}%`}
+            animate={{
+              backgroundColor: hex ?? "#242424",
+              filter: hex ? filter(value) : "none",
+            }}
+            transition={{ duration: 0.35, delay: index * 0.03 }}
+          />
+        ))}
+      </ol>
+    </Column>
   );
 }

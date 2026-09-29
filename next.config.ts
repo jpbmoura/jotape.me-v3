@@ -1,16 +1,19 @@
 import createMDX from "@next/mdx";
-import remarkFrontmatter from "remark-frontmatter";
-import remarkMDXFrontmatter from "remark-mdx-frontmatter";
+import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+const nextConfig: NextConfig = {
+  pageExtensions: ["ts", "tsx", "md", "mdx"],
 };
 
+// Plugins are passed by name so the config stays serializable for Turbopack.
 const withMDX = createMDX({
   options: {
-    remarkPlugins: [remarkFrontmatter, remarkMDXFrontmatter],
+    remarkPlugins: ["remark-frontmatter", "remark-mdx-frontmatter"],
+    rehypePlugins: ["rehype-slug", "rehype-mdx-code-props"],
   },
 });
 
-export default withMDX(nextConfig);
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
+
+export default withNextIntl(withMDX(nextConfig));

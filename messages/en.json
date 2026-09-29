@@ -1,0 +1,74 @@
+{
+  "Metadata": {
+    "title": "João Pedro de Moura",
+    "description": "Front-end engineer from Brazil and co-founder of Lucida. Writing about interfaces, design and the web.",
+    "blogTitle": "Blog",
+    "blogDescription": "Notes and interactive posts about front-end, design and building for the web."
+  },
+  "Nav": {
+    "home": "Home",
+    "blog": "Blog",
+    "github": "GitHub profile",
+    "linkedin": "LinkedIn profile",
+    "language": "Language"
+  },
+  "Home": {
+    "name": "João Pedro de Moura",
+    "role": "Front-end engineer",
+    "intro": "Crafting interfaces for the web for 5+ years. I care about the details that make software feel fast and obvious: motion, typography, the empty state nobody designed.",
+    "work": "Front-end at <eduzz>Eduzz</eduzz>, where I helped design our micro-frontend setup and the standards the teams build with. Co-founder of <lucida>Lucida</lucida>, which helps teachers turn their own material into exams.",
+    "hobby": "Away from the screen I make music and write, mostly for an audience of one.",
+    "writing": "Every now and then I write things down on the <blog>blog</blog>.",
+    "contactTitle": "Contact",
+    "contact": "Find me on <linkedin>LinkedIn</linkedin> or <github>GitHub</github>."
+  },
+  "Blog": {
+    "title": "Blog",
+    "subtitle": "Notes on front-end, design and building for the web. Some of them you can play with.",
+    "readMore": "Read post",
+    "readingTime": "{minutes} min read",
+    "back": "All posts",
+    "toc": "On this page",
+    "empty": "Nothing here yet.",
+    "loading": "Loading…",
+    "home": "João Pedro de Moura"
+  },
+  "Code": {
+    "copy": "Copy code",
+    "copied": "Copied!"
+  },
+  "Widgets": {
+    "pickColor": "Pick a color to start",
+    "pickColorHint": "Click or use the arrow keys",
+    "copyHex": "Copy {hex}",
+    "copied": "Copied!",
+    "hue": "Hue",
+    "brightness": "Brightness",
+    "saturation": "Saturation",
+    "pickHue": "Pick a hue to see how it changes",
+    "colorTypes": {
+      "primary": "Primary",
+      "secondary": "Secondary",
+      "tertiary": "Tertiary"
+    },
+    "modes": {
+      "selector": "Color wheel",
+      "two": "Complementary",
+      "three": "Triadic",
+      "analogue": "Analogous"
+    },
+    "colorNames": {
+      "red": "Red",
+      "yellow": "Yellow",
+      "green": "Green",
+      "blue": "Blue",
+      "violet": "Violet",
+      "pink": "Pink"
+    }
+  },
+  "NotFound": {
+    "title": "Nothing to see here",
+    "description": "This page wandered off, or never existed in the first place.",
+    "back": "Back home"
+  }
+}

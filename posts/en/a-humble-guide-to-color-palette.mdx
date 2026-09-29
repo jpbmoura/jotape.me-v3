@@ -1,0 +1,129 @@
+---
+title: "A humble guide to color palettes"
+abstract: "Every time I start a project, I spend a good while picking colors on sites like Coolors, Adobe Color or Color Hunt. But as the project takes shape, the ready-made palette starts to feel generic. In this post, I show how I build my own palette using a few basic color theory concepts."
+publishedOn: "2024-04-01T12:00:00-0400"
+---
+
+Every time I start a project, personal or for work, I spend a good while picking colors.
+
+I usually bounce between [Coolors](https://coolors.co/), [Adobe Color](https://color.adobe.com/) and [Color Hunt](https://colorhunt.co/) until something fits the idea. It works, but as the project takes shape, the palette starts to feel like it belongs to someone else. When that happens, I stop and build a palette from scratch, using a few concepts I've picked up along the way.
+
+Today we'll do that together by creating the color palette for a simple landing page. First, though, it's worth thinking about what to consider when choosing colors.
+
+## Color psychology
+
+Like the notes in a musical scale, colors can carry emotions and have a real effect on how we think and feel.
+
+Red, for example, is usually tied to passion and energy, and it can also signal danger or desire. Blue is linked to calm and gives off a sense of peace and quiet.
+
+<ArticleNote type="info">
+
+Pop culture uses color psychology all the time to play with how we feel. One of the best-known examples is [Breaking Bad](https://www.imdb.com/title/tt0903747/). There's a [really good article](https://geekpopnews.com.br/breaking-bad-e-a-quimica-das-cores/) (in Portuguese) on how the show does it.
+
+</ArticleNote>
+
+In other words, we can use colors on purpose to set a mood and get specific messages across in our apps.
+
+## The color wheel
+
+If you work with color, whether in painting, interior design, fashion or, in my case, web design, the color wheel is a basic tool. It's a visual map of colors, laid out so you can see how they relate to each other.
+
+<ChromaticCircle type="selector" />
+
+It has 12 main colors:
+
+- Three primary colors: red, blue and yellow
+- Three secondary colors: green, orange and purple
+- Six tertiary colors: yellow-orange, red-orange, red-purple, blue-purple, blue-green and yellow-green
+
+<ArticleNote type="info">
+
+I won't get into why each color is primary, secondary or tertiary. If you want to dig deeper, check out [this article](https://www.vivadecora.com.br/pro/cores-primarias/) (in Portuguese).
+
+</ArticleNote>
+
+Which brings up the question: **_"okay, but how do I actually use this thing?"_**. Let's look at a few combinations.
+
+### Complementary colors
+
+Colors that sit on opposite sides of the wheel are called **complementary**. Put them side by side and you get strong contrast, which helps the most important parts of your app stand out.
+
+<ChromaticCircle type="two" />
+
+### Triad
+
+A variation on complementary colors is the **triad**, also known as **split complementary** colors. Instead of two colors on opposite sides, a triad uses three colors evenly spaced around the wheel.
+
+<ChromaticCircle type="three" />
+
+### Analogous colors
+
+Analogous colors are the ones sitting next to each other on the wheel. They go together naturally and give a softer look.
+
+<ChromaticCircle type="analogue" />
+
+## Color properties
+
+We perceive every color as a mix of three properties: **hue**, **brightness** and **saturation**.
+
+<ColorProperties />
+
+**Hue** is the main trait of a color, the thing that makes us call it red, green, blue and so on.
+
+<ArticleNote type="info">
+
+Hue is determined by the wavelength of the light that hits the retina. Sorry for the nerd moment. 🤓
+
+</ArticleNote>
+
+**Brightness** is the intensity of the light reflected by a surface. A bright color looks light, and a color with low brightness looks dark.
+
+**Saturation** is how pure a color is, meaning how close it is to the pure color of the visible spectrum. A highly saturated color looks vivid and intense, while a desaturated one looks pale and a bit lifeless.
+
+Together, these three properties define how any color looks.
+
+## LaLhama Colchões
+
+With these concepts in mind, let's build the palette for a made-up mattress brand called "LaLhama".
+
+I like to start by picking a single color to represent the brand and the feeling I want it to give. For LaLhama, I went with a <Highlight color="sky">light blue</Highlight>, soft and friendly. According to color psychology, it suggests protection, calm and cleanliness, which is pretty much what a mattress brand wants to say.
+
+With the brand color set, I need a second color for contrast and to create focal points on the page. Looking at the color wheel, I went to the opposite side of the blue and picked a <Highlight color="orange">slightly brownish, slightly weird orange</Highlight>.
+
+### Generating shades
+
+In an app, you usually need several shades of the same color for different situations, like the info boxes that showed up a few times in this post.
+
+Here's how I define those shades:
+
+1. I make nine squares side by side, numbered from 100 to 900, and put the chosen color in the middle (500).
+
+<ColorShaders color="sky" stage={1} />
+
+2. Using the color properties, I set the lightest and darkest shades. For the lightest, I bump the **brightness** up a little and bring the **saturation** down a lot. For the darkest, I do the opposite: bring the **brightness** down a lot and tweak the **saturation** a bit. The hue stays the same, since that's what defines the color.
+
+<ColorShaders color="sky" stage={2} />
+
+3. With both ends in place, I fill in the middle shades by adjusting saturation and brightness bit by bit until the steps feel natural.
+
+<ColorShaders color="sky" stage={3} />
+
+4. I repeat the process with the secondary color, and that's every variation we'll need.
+
+<ColorShaders color="orange" stage={3} />
+
+<ArticleNote type="info">
+
+Almost every app needs to show error and success messages, informational text (like this one) and warnings. For those, I like to have a few support colors.
+
+I usually go with <Highlight color="blue">blue</Highlight> for info messages, <Highlight color="green">green</Highlight> for success, <Highlight color="red">red</Highlight> for errors and <Highlight color="yellow">yellow</Highlight> for warnings. That way the message is clear at a glance.
+
+I also generate shades for these colors, just with fewer steps. I usually go with six shades each.
+
+</ArticleNote>
+
+## Wrapping up the palette
+
+In the end, LaLhama got a light blue as its main color, an orange for highlights and a handful of support colors, each with its own scale of shades. None of it came out of a palette generator, and every choice has a reason behind it.
+
+Next time a ready-made palette feels too generic, try starting from a single color and building the rest with the color wheel. It takes more work, but the result actually looks like your project.

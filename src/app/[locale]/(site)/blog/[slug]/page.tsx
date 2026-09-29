@@ -60,7 +60,7 @@ export default async function PostPage({ params }: Props) {
 
   const [{ meta, headings }, { default: Post }, t] = await Promise.all([
     loadBlogPost(slug, locale),
-    import(`../../../../../posts/${locale}/${slug}.mdx`),
+    import(`../../../../../../posts/${locale}/${slug}.mdx`),
     getTranslations("Blog"),
   ]);
 

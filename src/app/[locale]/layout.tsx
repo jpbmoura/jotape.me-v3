@@ -3,7 +3,6 @@ import { Geist_Mono, Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import Footer from "@/components/footer";
 import Providers from "@/components/providers";
 import { routing } from "@/i18n/routing";
 import { siteUrl } from "@/utils/constants/site";
@@ -54,14 +53,9 @@ export default async function LocaleLayout({
 
   return (
     <html lang={htmlLang[locale]} className={`${inter.variable} ${geistMono.variable}`}>
-      <body className="flex min-h-dvh flex-col">
+      <body>
         <NextIntlClientProvider>
-          <Providers>
-            <main className="flex-1">
-              {children}
-            </main>
-            <Footer />
-          </Providers>
+          <Providers>{children}</Providers>
         </NextIntlClientProvider>
       </body>
     </html>

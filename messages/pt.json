@@ -70,5 +70,195 @@
     "title": "Não tem nada aqui",
     "description": "Essa página se perdeu, ou nunca existiu.",
     "back": "Voltar para o início"
+  },
+  "LaLhama": {
+    "meta": {
+      "title": "LaLhama · Sono sem drama",
+      "description": "Espuma que respira, molas ensacadas e 100 noites para testar em casa. Uma marca fictícia de colchões criada como exemplo de paleta de cores."
+    },
+    "banner": {
+      "label": "Exemplo ao vivo do post",
+      "post": "Um humilde guia sobre paleta de cores"
+    },
+    "nav": {
+      "home": "Início da LaLhama",
+      "benefits": "Benefícios",
+      "layers": "Por dentro",
+      "pricing": "Preços",
+      "faq": "Dúvidas",
+      "cta": "Teste por 100 noites"
+    },
+    "hero": {
+      "title": "O colchão que tira o drama da hora de dormir.",
+      "subtitle": "Espuma que respira, molas ensacadas e um tecido tão macio que o despertador vira negociação. Teste por 100 noites e, se não gostar, a gente busca na sua casa.",
+      "primary": "Escolher meu colchão",
+      "secondary": "Ver o que tem dentro"
+    },
+    "benefits": {
+      "title": "Feito para quem leva o cochilo a sério.",
+      "subtitle": "Passamos três anos testando espumas, molas e tecidos, e nossas lhamas dormiram em todos os protótipos.",
+      "items": [
+        {
+          "title": "Fresco a noite toda",
+          "text": "A espuma de células abertas deixa o ar circular, e você para de virar o travesseiro atrás do lado gelado."
+        },
+        {
+          "title": "Firme onde precisa",
+          "text": "Mais de 800 molas ensacadas trabalham cada uma no seu canto. Suas costas ficam apoiadas e a ida do seu par à geladeira de madrugada não te acorda."
+        },
+        {
+          "title": "Amigo da rinite",
+          "text": "A capa removível tem tratamento contra ácaros e pode ir direto para a máquina de lavar."
+        },
+        {
+          "title": "Chega numa caixa",
+          "text": "Vem enrolado a vácuo numa caixa que cabe em qualquer elevador e, depois de aberto, leva algumas horas para ficar no ponto."
+        }
+      ]
+    },
+    "layers": {
+      "title": "O que tem dentro",
+      "subtitle": "Isso é tudo o que fica entre você e o chão.",
+      "items": [
+        {
+          "name": "Capa Nuvem",
+          "text": "Tecido de malha com fibra de bambu, macio ao toque e fresco nas noites quentes."
+        },
+        {
+          "name": "Espuma de conforto",
+          "text": "Acompanha o formato do corpo sem aquela sensação de areia movediça."
+        },
+        {
+          "name": "Camada de transição",
+          "text": "Distribui o peso por igual, para nenhum ponto afundar."
+        },
+        {
+          "name": "Molas ensacadas",
+          "text": "A base que mantém a coluna alinhada e as bordas firmes."
+        }
+      ]
+    },
+    "pricing": {
+      "title": "Escolha sua lhama.",
+      "subtitle": "Todos os tamanhos têm as mesmas camadas. Muda só a largura.",
+      "popular": "A mais escolhida",
+      "cta": "Quero essa",
+      "items": [
+        {
+          "name": "Lhaminha",
+          "size": "Solteiro · 88 × 188 cm",
+          "price": "R$ 1.290",
+          "installments": "ou 10x de R$ 129 sem juros",
+          "features": [
+            "Ideal para quarto de criança e de hóspedes",
+            "Firmeza média, nota 6 de 10",
+            "100 noites de teste"
+          ]
+        },
+        {
+          "name": "Lhama",
+          "size": "Casal · 138 × 188 cm",
+          "price": "R$ 1.890",
+          "installments": "ou 10x de R$ 189 sem juros",
+          "features": [
+            "Espaço para dois (e para o gato)",
+            "Firmeza média, nota 6 de 10",
+            "Par de travesseiros de brinde"
+          ]
+        },
+        {
+          "name": "Lhamona",
+          "size": "King · 193 × 203 cm",
+          "price": "R$ 2.790",
+          "installments": "ou 10x de R$ 279 sem juros",
+          "features": [
+            "Dá para dormir na diagonal",
+            "Firmeza média, nota 6 de 10",
+            "Travesseiros e protetor de colchão"
+          ]
+        }
+      ],
+      "note": "Frete grátis para todo o Brasil e devolução sem custo em até 100 noites."
+    },
+    "testimonials": {
+      "title": "Quem dorme, recomenda",
+      "rating": "4,9 de 5 em 2.318 avaliações",
+      "items": [
+        {
+          "quote": "Eu acordava às 3 da manhã sem motivo. Agora só acordo por causa do despertador, e acordo brava com ele.",
+          "name": "Marina S.",
+          "detail": "Lhama · São Paulo"
+        },
+        {
+          "quote": "Meu marido se mexe a noite inteira. Eu simplesmente parei de perceber.",
+          "name": "Carla R.",
+          "detail": "Lhamona · Curitiba"
+        },
+        {
+          "quote": "Desconfiei de colchão que chega na caixa. Ele abriu na minha sala e ocupou metade dela. Melhor compra por impulso do ano.",
+          "name": "Rafael T.",
+          "detail": "Lhama · Recife"
+        }
+      ]
+    },
+    "guarantee": {
+      "seal": "noites de teste",
+      "sealRing": "100 noites · devolução grátis · 100 noites · devolução grátis · ",
+      "title": "Teste em casa, sem pressa.",
+      "text": "Cinco minutos deitado na loja dizem pouco sobre como você vai dormir, então você tem 100 noites em casa. Se não for para você, a gente busca e devolve o dinheiro.",
+      "items": [
+        {
+          "title": "100 noites de teste",
+          "text": "Tempo de sobra para o corpo se acostumar."
+        },
+        {
+          "title": "Frete grátis",
+          "text": "Entregamos na sua porta, em qualquer estado."
+        },
+        {
+          "title": "10 anos de garantia",
+          "text": "Contra afundamento e defeitos de fabricação."
+        }
+      ]
+    },
+    "faq": {
+      "title": "Perguntas antes de dormir",
+      "items": [
+        {
+          "q": "Como funcionam as 100 noites de teste?",
+          "a": "Durma nele por pelo menos 21 noites, porque o corpo precisa de um tempo para se adaptar. Se ainda assim não gostar, fale com a gente antes da noite 100. Agendamos a retirada e devolvemos o valor integral."
+        },
+        {
+          "q": "Ele é firme ou macio?",
+          "a": "Firmeza média, nota 6 de 10. É macio o bastante em cima para quem dorme de lado e firme o bastante embaixo para quem dorme de costas ou de bruços."
+        },
+        {
+          "q": "Quanto tempo leva para ele expandir?",
+          "a": "Dá para dormir nele depois de mais ou menos uma hora. Ele chega ao tamanho final em umas 24 horas, e o cheiro de espuma nova some ainda no primeiro dia."
+        },
+        {
+          "q": "Serve na minha cama?",
+          "a": "Serve. Funciona em box, em estrado de ripas e até direto no chão. No estrado, o ideal é que o espaço entre as ripas seja menor que 7 cm."
+        },
+        {
+          "q": "Tenho alergia. Posso usar?",
+          "a": "Pode. A capa tem tratamento contra ácaros e fungos, e as espumas são certificadas sem substâncias nocivas. A capa também vai para a máquina de lavar."
+        },
+        {
+          "q": "Quanto tempo demora a entrega?",
+          "a": "Nas capitais, de 2 a 5 dias úteis. Nas outras cidades, até 10. Você recebe o código de rastreio assim que o pedido sai."
+        }
+      ]
+    },
+    "finalCta": {
+      "title": "Peça hoje e ele sai amanhã.",
+      "text": "Você vai ter 100 noites para decidir se ele fica.",
+      "cta": "Escolher meu colchão"
+    },
+    "footer": {
+      "tagline": "Sono sem drama.",
+      "palette": "Paleta",
+      "disclaimer": "A LaLhama é uma marca fictícia, inventada como exemplo para um post sobre paleta de cores. Não tem nada à venda aqui."
+    }
   }
 }

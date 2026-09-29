@@ -70,5 +70,195 @@
     "title": "Nothing to see here",
     "description": "This page wandered off, or never existed in the first place.",
     "back": "Back home"
+  },
+  "LaLhama": {
+    "meta": {
+      "title": "LaLhama · Sleep, no drama",
+      "description": "Breathable foam, pocket springs and 100 nights to try it at home. A fictional mattress brand built as a color palette example."
+    },
+    "banner": {
+      "label": "Live example from the post",
+      "post": "A humble guide to color palettes"
+    },
+    "nav": {
+      "home": "LaLhama home",
+      "benefits": "Benefits",
+      "layers": "Inside",
+      "pricing": "Pricing",
+      "faq": "FAQ",
+      "cta": "Try it for 100 nights"
+    },
+    "hero": {
+      "title": "The mattress that takes the drama out of bedtime.",
+      "subtitle": "Breathable foam, pocket springs and a cover so soft your alarm clock becomes a negotiation. Try it for 100 nights, and if it doesn't win you over, we'll come pick it up.",
+      "primary": "Find my mattress",
+      "secondary": "See what's inside"
+    },
+    "benefits": {
+      "title": "Made for people who take naps seriously.",
+      "subtitle": "We spent three years testing foams, springs and fabrics, and our llamas slept on every prototype.",
+      "items": [
+        {
+          "title": "Cool all night",
+          "text": "Open-cell foam lets the air move, so you stop flipping the pillow looking for the cold side."
+        },
+        {
+          "title": "Support where it counts",
+          "text": "Over 800 pocket springs move on their own. Your back stays supported, and your partner's 2 a.m. fridge run doesn't wake you up."
+        },
+        {
+          "title": "Kind to allergies",
+          "text": "The removable cover is treated against dust mites and can go straight into the washing machine."
+        },
+        {
+          "title": "Shows up in a box",
+          "text": "It comes vacuum-rolled in a box that fits in any elevator, and takes a few hours to fluff up once you open it."
+        }
+      ]
+    },
+    "layers": {
+      "title": "What's inside",
+      "subtitle": "This is everything between you and the floor.",
+      "items": [
+        {
+          "name": "Cloud cover",
+          "text": "Knit fabric with bamboo fibre, soft to the touch and cool on hot nights."
+        },
+        {
+          "name": "Comfort foam",
+          "text": "Follows the shape of your body without that quicksand feeling."
+        },
+        {
+          "name": "Transition layer",
+          "text": "Spreads your weight evenly so no single spot sinks."
+        },
+        {
+          "name": "Pocket springs",
+          "text": "The base that keeps your spine aligned and the edges firm."
+        }
+      ]
+    },
+    "pricing": {
+      "title": "Pick your llama.",
+      "subtitle": "Every size has the same layers. Only the width changes.",
+      "popular": "Most chosen",
+      "cta": "Choose this one",
+      "items": [
+        {
+          "name": "Lhaminha",
+          "size": "Twin · 38 × 75 in",
+          "price": "$449",
+          "installments": "or $38/mo for 12 months",
+          "features": [
+            "Great for kids' and guest rooms",
+            "Medium-firm, 6 out of 10",
+            "100-night trial"
+          ]
+        },
+        {
+          "name": "Lhama",
+          "size": "Queen · 60 × 80 in",
+          "price": "$799",
+          "installments": "or $67/mo for 12 months",
+          "features": [
+            "Room for two (and the cat)",
+            "Medium-firm, 6 out of 10",
+            "Two pillows included"
+          ]
+        },
+        {
+          "name": "Lhamona",
+          "size": "King · 76 × 80 in",
+          "price": "$1,099",
+          "installments": "or $92/mo for 12 months",
+          "features": [
+            "Room to sleep diagonally",
+            "Medium-firm, 6 out of 10",
+            "Pillows and a mattress protector"
+          ]
+        }
+      ],
+      "note": "Free shipping on every order, and free returns for 100 nights."
+    },
+    "testimonials": {
+      "title": "What people who sleep on it say",
+      "rating": "4.9 out of 5 from 2,318 reviews",
+      "items": [
+        {
+          "quote": "I used to wake up at 3 a.m. for no reason. Now the only thing that wakes me up is the alarm, and I resent it.",
+          "name": "Marina S.",
+          "detail": "Lhama · São Paulo"
+        },
+        {
+          "quote": "My husband tosses and turns all night. I just stopped noticing.",
+          "name": "Carla R.",
+          "detail": "Lhamona · Curitiba"
+        },
+        {
+          "quote": "I didn't trust a mattress that comes in a box. It opened in my living room and took up half of it. Best impulse buy of the year.",
+          "name": "Rafael T.",
+          "detail": "Lhama · Recife"
+        }
+      ]
+    },
+    "guarantee": {
+      "seal": "nights to try it",
+      "sealRing": "100 nights · free returns · 100 nights · free returns · ",
+      "title": "Try it at home. No rush.",
+      "text": "Five minutes lying down in a store says little about how you'll sleep, so you get 100 nights at home instead. If it's not for you, we pick it up and give your money back.",
+      "items": [
+        {
+          "title": "100-night trial",
+          "text": "Enough time for your body to get used to it."
+        },
+        {
+          "title": "Free shipping",
+          "text": "Delivered to your door, anywhere in the country."
+        },
+        {
+          "title": "10-year warranty",
+          "text": "Covers sagging and manufacturing defects."
+        }
+      ]
+    },
+    "faq": {
+      "title": "Questions before bed",
+      "items": [
+        {
+          "q": "How does the 100-night trial work?",
+          "a": "Sleep on it for at least 21 nights, since your body needs some time to adjust. If you still don't like it, message us before night 100. We schedule the pickup and give you a full refund."
+        },
+        {
+          "q": "Is it firm or soft?",
+          "a": "Medium-firm, a 6 out of 10. Soft enough on top for side sleepers and firm enough underneath for back and stomach sleepers."
+        },
+        {
+          "q": "How long does it take to expand?",
+          "a": "You can sleep on it after about an hour. It reaches full size in around 24 hours, and the new-foam smell is gone by the end of the first day."
+        },
+        {
+          "q": "Will it work with my bed frame?",
+          "a": "Yes. It works on box springs, slatted frames and even straight on the floor. On slatted frames, keep the gaps under 3 inches."
+        },
+        {
+          "q": "I have allergies. Is it safe for me?",
+          "a": "The cover is treated against dust mites and mold, and the foams are certified free of harmful substances. You can also throw the cover in the wash."
+        },
+        {
+          "q": "How long does delivery take?",
+          "a": "Most orders arrive in 2 to 5 business days. You'll get a tracking link as soon as it ships."
+        }
+      ]
+    },
+    "finalCta": {
+      "title": "Order today and it ships tomorrow.",
+      "text": "You'll have 100 nights to decide whether it stays.",
+      "cta": "Find my mattress"
+    },
+    "footer": {
+      "tagline": "Sleep, no drama.",
+      "palette": "Palette",
+      "disclaimer": "LaLhama is a fictional brand, made up as an example for a blog post about color palettes. There's nothing to buy here."
+    }
   }
 }

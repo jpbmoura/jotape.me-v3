@@ -19,6 +19,34 @@
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
 }
 
+/* LaLhama example: the exact sky/orange scales from the color palette post.
+   Inline so font-display reads --font-nunito where the example sets it, not on :root. */
+@theme inline {
+  --font-display: var(--font-nunito), ui-rounded, system-ui, sans-serif;
+}
+
+@theme {
+  --color-lh-sky-100: #e0f2fe;
+  --color-lh-sky-200: #bae6fd;
+  --color-lh-sky-300: #7dd3fc;
+  --color-lh-sky-400: #38bdf8;
+  --color-lh-sky-500: #0ea5e9;
+  --color-lh-sky-600: #0284c7;
+  --color-lh-sky-700: #0369a1;
+  --color-lh-sky-800: #075985;
+  --color-lh-sky-900: #0c4a6e;
+
+  --color-lh-orange-100: #ffedd5;
+  --color-lh-orange-200: #fed7aa;
+  --color-lh-orange-300: #fdba74;
+  --color-lh-orange-400: #fb923c;
+  --color-lh-orange-500: #f97316;
+  --color-lh-orange-600: #ea580c;
+  --color-lh-orange-700: #c2410c;
+  --color-lh-orange-800: #9a3412;
+  --color-lh-orange-900: #7c2d12;
+}
+
 @layer base {
   html {
     color-scheme: dark;
@@ -65,4 +93,19 @@
 
 .code-block [data-bright-theme] code > div {
   padding-inline: 1rem;
+}
+
+/* LaLhama example */
+.lalhama :focus-visible {
+  outline-color: var(--color-lh-orange-500);
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
